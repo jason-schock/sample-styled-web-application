@@ -1,4 +1,0 @@
-C:\Working\develop-form-w2-healthcare-reporting\develop-form-w2-healthcare-reporting\bin\develop-form-w2-healthcare-reporting.dll
-C:\Working\develop-form-w2-healthcare-reporting\develop-form-w2-healthcare-reporting\bin\develop-form-w2-healthcare-reporting.pdb
-C:\Working\develop-form-w2-healthcare-reporting\develop-form-w2-healthcare-reporting\obj\Debug\develop-form-w2-healthcare-reporting.dll
-C:\Working\develop-form-w2-healthcare-reporting\develop-form-w2-healthcare-reporting\obj\Debug\develop-form-w2-healthcare-reporting.pdb

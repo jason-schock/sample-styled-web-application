@@ -13,7 +13,6 @@
     <RootNamespace>HealthcareReporting</RootNamespace>
     <AssemblyName>HealthcareReporting</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +50,8 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Includes\mapdeductions.js" />
+    <Content Include="MapDeductionsPlans.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Grid.ascx" />
     <Content Include="Header.ascx" />
@@ -58,7 +59,7 @@
     <Content Include="Includes\grid.js" />
     <Content Include="Includes\global\js\global-script.js" />
     <Content Include="Includes\jquery\jquery-1.7.2.min.js" />
-    <Content Include="Popup.ascx" />
+    <Content Include="GridPopup.ascx" />
     <Content Include="Styles\Styles.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -68,8 +69,16 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Default.aspx" />
+    <Content Include="Selector.ascx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapDeductionsPlans.aspx.cs">
+      <DependentUpon>MapDeductionsPlans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MapDeductionsPlans.aspx.designer.cs">
+      <DependentUpon>MapDeductionsPlans.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -91,12 +100,12 @@
     <Compile Include="Header.ascx.designer.cs">
       <DependentUpon>Header.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Popup.ascx.cs">
-      <DependentUpon>Popup.ascx</DependentUpon>
+    <Compile Include="GridPopup.ascx.cs">
+      <DependentUpon>GridPopup.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Popup.ascx.designer.cs">
-      <DependentUpon>Popup.ascx</DependentUpon>
+    <Compile Include="GridPopup.ascx.designer.cs">
+      <DependentUpon>GridPopup.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Default.aspx.cs">
@@ -107,9 +116,17 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Services\Deduction.cs" />
+    <Compile Include="Services\DeductionPlansRepository.cs" />
     <Compile Include="Services\Employee.cs" />
     <Compile Include="Services\EmployeeRepository.cs" />
     <Compile Include="Services\PagedList`1.cs" />
+    <Compile Include="Selector.ascx.cs">
+      <DependentUpon>Selector.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Selector.ascx.designer.cs">
+      <DependentUpon>Selector.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,32 +4,37 @@
 		function () { $(this).closest("td").find(".popup").hide(); }
 	);
 	$('table.highlighted tr').hover(
-		function () { $(this).toggleClass("highlighted"); },
-		function () { $(this).toggleClass("highlighted"); }
+		function () { if (!$(this).hasClass("GreenHeader")) { $(this).toggleClass("highlighted"); } },
+		function () { if (!$(this).hasClass("GreenHeader")) { $(this).toggleClass("highlighted"); } }
 	);
 	$('tr.pager a, tr th a').click(function (e) {
-		var edits = $("input.edit");
-		for (var i = 0; i < edits.length; i++) {
-			var textbox = $(edits[i]);
-			var originalValue = textbox.closest("td").find("span.adjustment").text();
-			if (originalValue != textbox.val()) {
-				e.preventDefault();
-				alert("Please save the changes before moving on.");
-				return false;
+		var $textboxes = $("input.adjustment");
+		var stop = false;
+		for (var i = 0; i < $textboxes.length; i++) {
+			var $textbox = $($textboxes[i]);
+			if ($textbox.data("original") !== undefined && $textbox.data("original") !== $textbox.val()) {
+				$textbox.addClass("warning");
+				stop = true;
 			}
+		}
+
+		if (stop) {
+			e.preventDefault();
+			alert("Please save the changes before moving on.");
+			return false;
 		}
 		return true;
 	});
-	$("span.adjustment").click(function () {
-		var $td = $(this).parent();
-		if ($td.find("input.edit").length > 0) {
-			return;
-		}
-		$(this).hide();
-
-		$td.append("<input class='edit' type='text' value='" + $(this).text() + "'>");
-		$td.find("input.edit").focus();
-		$td.find("input.edit").select();
+	$("input.adjustment").focus(function () {
+		$(this).data("original", $(this).val());
+		$(this).select();
+	});
+	$('#btnCancel').click(function () {
+		alert("Cancelling to Calling Page...");
+		window.location = "";
+	});
+	$("#btnMapDeductionsPlans").click(function () {
+		window.location = "MapDeductionsPlans.aspx";
 	});
 	$("#btnUpdate").click(function () {
 		var updates = [];
@@ -45,7 +50,6 @@
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (response) {
-				$("input.edit").closest("td").addClass("attention");
 				window.location = "";
 			},
 			error: function (xhr, ajaxOptions, thrownError) {

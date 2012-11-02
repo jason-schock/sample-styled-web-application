@@ -335,10 +335,18 @@ img.Icon {
 	
 	.body2 {background:  url(../Images/tooltip/Middle2.png); background-repeat:repeat}
 
-span.adjustment { cursor: pointer; }
+/*                */
+/*  Common        */
+/*                */
+.right { float: right; }
+
+/*                */
+/* Employee list  */
+/*                */
+input.adjustment { max-width: 150px; }
+input.warning { background-color: #F4A5A5; }
 
 tr.highlighted { background-color: #F3F781; }
-tr td.attention { background-color: #F39548; }
 div.popup { background-color: #fff; padding: 10px; min-width:150px; min-height:100px; display:none; position: absolute; border: 1px solid black; }
 	
 tr.pager.highlighted { background-color: #fff; }
@@ -346,3 +354,9 @@ tr.pager.highlighted { background-color: #fff; }
 .pager a:hover { text-decoration: underline; }
 .pager a:link { font-size: 15px; padding: 2px 5px; background-color :#EBECEE; border: 1px solid #B5BAC0; }
 .pager span { background-color: #263441; border: 1px solid #DBEAFF; color: #FFFFFF; padding: 2px 5px; }
+
+/*                  */
+/*  Map Deductions  */
+/*                  */
+select.listView { min-height: 200px; max-width: 200px; }
+select.listView option { padding: 10px; }

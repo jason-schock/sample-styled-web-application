@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Grid.ascx.cs" Inherits="HealthcareReporting.Grid" %>
-<%@ Register TagPrefix="uc" TagName="Popup" Src="~/Popup.ascx" %>
+<%@ Register TagPrefix="uc" TagName="GridPopup" Src="~/GridPopup.ascx" %>
 <form id="form1" runat="server">
 	<asp:HiddenField ID="IsDirty" runat="server" ClientIDMode="Static" />
 	<asp:GridView runat="server" 
@@ -24,9 +24,9 @@
 			<asp:TemplateField HeaderText="Name" SortExpression="Name">
 				<ItemTemplate>
 					<asp:Label runat="server" Width="100%" CssClass="name">
-						<%# Eval("Name")%>
+						<%# Eval("Name") %>
 					</asp:Label>
-					<asp:HiddenField runat="server" Value='<%# Eval("Id") %>' />
+					<asp:HiddenField runat="server" Value='<%# Eval("Ssn") %>' />
 				</ItemTemplate>
 			</asp:TemplateField>
 			<asp:BoundField HeaderText="Department" DataField="Department" SortExpression="Department">
@@ -36,14 +36,16 @@
 					<asp:Label runat="server" CssClass="deduction" Width="100%">
 						<%# Eval("Deduction", "${0}")%>
 					</asp:Label>
-					<uc:Popup runat="server" id="ucPopup" Deductions='<%# Eval("Deductions") %>' ></uc:Popup>
+					<uc:GridPopup runat="server" id="ucGridPopup" Deductions='<%# Eval("Deductions") %>' ></uc:GridPopup>
 				</ItemTemplate>
 			</asp:TemplateField>
 			<asp:TemplateField HeaderText="Adjustment Amount" SortExpression="Adjustment">
 				<ItemTemplate>
-					<asp:Label runat="server" CssClass="adjustment" Width="100%">
-						<%# Eval("Adjustment", "${0}")%>
+					<asp:Label runat="server">
+						$
 					</asp:Label>
+					<asp:TextBox runat="server" CssClass="adjustment" Width="100%" Text='<%# Eval("Adjustment") %>' autocomplete="off">
+					</asp:TextBox>
 				</ItemTemplate>
 			</asp:TemplateField>
 			<asp:BoundField HeaderText="Total Amount" DataField="Total" SortExpression="Total" DataFormatString="${0}">

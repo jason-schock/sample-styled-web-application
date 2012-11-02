@@ -5,7 +5,7 @@ namespace HealthcareReporting.Services
 {
 	public class Employee
 	{
-		public long Id { get; set; }
+		public string Ssn { get; set; }
 		public string Name { get; set; }
 		public string Department { get; set; }
 		public IEnumerable<Deduction> Deductions { get; set; }
@@ -19,6 +19,11 @@ namespace HealthcareReporting.Services
 		public decimal Total
 		{
 			get { return Deduction + Adjustment;  }
+		}
+
+		public override string ToString()
+		{
+			return "(" + Ssn + ") " + Name + ", adj. $" + Adjustment;
 		}
 	}
 }

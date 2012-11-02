@@ -17,5 +17,10 @@ namespace HealthcareReporting
 		{
 			new EmployeeRepository().UpdateEmployees(updates);
 		}
+
+		protected void MapDeductionsPlans(object sender, EventArgs e)
+		{
+			Response.Redirect("MapDeductionsPlans.aspx");
+		}
 	}
 }

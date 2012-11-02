@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using HealthcareReporting.Services;
+using System.Linq;
 
 namespace HealthcareReporting
 {
@@ -21,19 +22,13 @@ namespace HealthcareReporting
 			BindData();
 		}
 
-		private void BindData(IEnumerable<Employee> dataSource = null)
-		{
-			gvEmployees.DataSource = dataSource ?? Employees;
-			gvEmployees.DataBind();
-		}
-
 		protected void RowCreated(object sender, GridViewRowEventArgs e)
 		{
 			if (e.Row.RowType != DataControlRowType.DataRow) {
 				return;
 			}
 
-			var popup = e.Row.FindControl("ucPopup") as Popup;
+			var popup = e.Row.FindControl("ucGridPopup") as GridPopup;
 			if (popup != null && e.Row.DataItem is Employee) {
 				popup.Deductions = ((Employee)e.Row.DataItem).Deductions;
 				popup.BindData();
@@ -42,20 +37,54 @@ namespace HealthcareReporting
 
 		protected void Sorting(object sender, GridViewSortEventArgs e)
 		{
-			if (e.SortExpression == gvEmployees.Attributes["SortExpression"]) {
+			if (e.SortExpression == SortExpression) {
 				//direction is always "ascending", need to remember the last one and swap if necessary
-				e.SortDirection = (e.SortDirection == SortDirection.Ascending) ? SortDirection.Descending : SortDirection.Ascending;
+				e.SortDirection = (SortDirection == SortDirection.Ascending) ? SortDirection.Descending : SortDirection.Ascending;
 			}
-			gvEmployees.Attributes["SortDirection"] = e.SortDirection.ToString();
-			gvEmployees.Attributes["SortExpression"] = e.SortExpression;
-			
+			SortDirection = e.SortDirection;
+			SortExpression = e.SortExpression;
+
+			AddSortingSign();
+
 			var employees = new List<Employee>(Employees);
 			employees.Sort(new EmployeeComparer(e.SortExpression, e.SortDirection));
 
 			BindData(employees);
 		}
 
-		public class EmployeeComparer : IComparer<Employee>
+		private void BindData(IEnumerable<Employee> dataSource = null)
+		{
+			gvEmployees.DataSource = dataSource ?? Employees;
+			gvEmployees.DataBind();
+		}
+
+		private SortDirection SortDirection
+		{
+			get { return (SortDirection)Enum.Parse(typeof(SortDirection), gvEmployees.Attributes["SortDirection"] ?? "Ascending"); }
+			set { gvEmployees.Attributes["SortDirection"] = value.ToString(); }
+		}
+
+		private string SortExpression
+		{
+			get { return gvEmployees.Attributes["SortExpression"]; }
+			set { gvEmployees.Attributes["SortExpression"] = value; }
+		}
+
+		private void AddSortingSign()
+		{
+			var ascending = " ▲";
+			var descending = " ▼";
+			foreach (var column in gvEmployees.Columns.Cast<DataControlField>()) {
+				if (column.HeaderText.EndsWith(ascending) || column.HeaderText.EndsWith(descending)) {
+					column.HeaderText = column.HeaderText.Substring(0, column.HeaderText.Length - 2);
+				}
+				if (column.SortExpression == SortExpression) {
+					column.HeaderText += SortDirection == SortDirection.Ascending ? ascending : descending;
+				}
+			}
+		}
+
+		internal class EmployeeComparer : IComparer<Employee>
 		{
 			private readonly string _field;
 			private readonly SortDirection _sortDirection;
@@ -89,7 +118,7 @@ namespace HealthcareReporting
 						result = 0;
 						break;
 				}
-				return result*(_sortDirection == SortDirection.Ascending ? -1 : 1);
+				return result*(_sortDirection == SortDirection.Ascending ? 1 : -1);
 			}
 		}
 	}

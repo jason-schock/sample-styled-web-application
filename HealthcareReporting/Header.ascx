@@ -24,12 +24,12 @@
 					<td style="width:30%;white-space:nowrap;text-align:left">
 						<%: SubTitle %>
 					</td>
-					<td style="width:40%;white-space:nowrap;text-align:center">
+					<td style="width:40%;white-space:nowrap;text-align:center" runat="server" ID="legend">
 						LEGEND: <span class="RequiredFields">Required</span>, Optional
 					</td>
 					<td style="width:30%;white-space:nowrap;text-align:right">
 						<input class="Pointer" type="button" id="btnUpdate" value="Update"/>
-						<input class="Pointer" type="button" id="btnCancel" value="Calling Page"/>
+						<input class="Pointer" type="button" id="btnCancel" value="Cancel"/>
 					</td>
 				</tr>
 			</table>

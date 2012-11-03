@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.1.10.0\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -50,13 +53,16 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Includes\mapdeductions.js" />
+    <Content Include="ImportAdjustments.aspx" />
+    <Content Include="Includes\common.js" />
+    <Content Include="Includes\importadjustments.js" />
+    <Content Include="Includes\mapdeductionplans.js" />
     <Content Include="MapDeductionsPlans.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Grid.ascx" />
     <Content Include="Header.ascx" />
     <Content Include="Images\Slices\icon_logout.jpg" />
-    <Content Include="Includes\grid.js" />
+    <Content Include="Includes\default.js" />
     <Content Include="Includes\global\js\global-script.js" />
     <Content Include="Includes\jquery\jquery-1.7.2.min.js" />
     <Content Include="GridPopup.ascx" />
@@ -72,6 +78,15 @@
     <Content Include="Selector.ascx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Services\DeductionSchema.cs" />
+    <Compile Include="Services\DeductionPlansRepository.Hardcoded.cs" />
+    <Compile Include="ImportAdjustments.aspx.cs">
+      <DependentUpon>ImportAdjustments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ImportAdjustments.aspx.designer.cs">
+      <DependentUpon>ImportAdjustments.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MapDeductionsPlans.aspx.cs">
       <DependentUpon>MapDeductionsPlans.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -115,11 +130,12 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\EmployeeRepository.Hardcoded.cs" />
     <Compile Include="Services\Deduction.cs" />
     <Compile Include="Services\DeductionPlansRepository.cs" />
     <Compile Include="Services\Employee.cs" />
+    <Compile Include="Services\EmployeeIdType.cs" />
     <Compile Include="Services\EmployeeRepository.cs" />
-    <Compile Include="Services\PagedList`1.cs" />
     <Compile Include="Selector.ascx.cs">
       <DependentUpon>Selector.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -133,6 +149,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GlobalMasterPages\globalmaster.master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

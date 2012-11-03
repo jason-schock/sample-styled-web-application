@@ -339,6 +339,12 @@ img.Icon {
 /*  Common        */
 /*                */
 .right { float: right; }
+span.required { color: #B40404; }
+div.subheader {width: 98%; background-color: #B5F4B0; padding: 10px 10px 10px 5px; margin: 10px 0 10px 0; border: 1px solid #5D615D; }
+div.subheader span {font-weight: bold;}
+input[type="button"].styled { cursor: pointer; margin: -3px 5px 0 0; -moz-box-shadow:inset 0px 1px 0px 0px #ffffff; -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff; box-shadow:inset 0px 1px 0px 0px #ffffff; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) ); background-color:#ededed; -moz-border-radius:6px; -webkit-border-radius:6px; border-radius:6px; border:1px solid #959595; display:inline-block; color:#777777; font-family:arial; font-size:10px; font-weight:bold; padding:4px 10px; text-decoration:none; text-shadow:1px 1px 0px #ffffff; }
+input[type="button"].styled:hover { background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) ); background-color:#dfdfdf; }
+input[type="button"].styled:active { position:relative; top:1px; }
 
 /*                */
 /* Employee list  */
@@ -346,7 +352,9 @@ img.Icon {
 input.adjustment { max-width: 150px; }
 input.warning { background-color: #F4A5A5; }
 
-tr.highlighted { background-color: #F3F781; }
+tr.highlighted { background-color: #DAF5C2; }
+tr.header {background-color: #ABABAB; }
+tr.header a { font-weight: bold; color: black; padding-top: 15px; }
 div.popup { background-color: #fff; padding: 10px; min-width:150px; min-height:100px; display:none; position: absolute; border: 1px solid black; }
 	
 tr.pager.highlighted { background-color: #fff; }
@@ -358,5 +366,5 @@ tr.pager.highlighted { background-color: #fff; }
 /*                  */
 /*  Map Deductions  */
 /*                  */
-select.listView { min-height: 200px; max-width: 200px; }
+select.listView { min-height: 200px; min-width: 200px; }
 select.listView option { padding: 10px; }

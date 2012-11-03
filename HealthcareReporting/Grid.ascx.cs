@@ -30,7 +30,7 @@ namespace HealthcareReporting
 
 			var popup = e.Row.FindControl("ucGridPopup") as GridPopup;
 			if (popup != null && e.Row.DataItem is Employee) {
-				popup.Deductions = ((Employee)e.Row.DataItem).Deductions;
+				popup.Deductions = ((Employee)e.Row.DataItem).DeductionSchema.Deductions;
 				popup.BindData();
 			}
 		}
@@ -106,13 +106,13 @@ namespace HealthcareReporting
 						result = x.Department.CompareTo(y.Department);
 						break;
 					case "Deduction":
-						result = x.Deduction.CompareTo(y.Deduction);
+						result = x.DeductionSchema.TotalDeduction.CompareTo(y.DeductionSchema.TotalDeduction);
 						break;
 					case "Adjustment":
-						result = x.Adjustment.CompareTo(y.Adjustment);
+						result = x.DeductionSchema.Adjustment.CompareTo(y.DeductionSchema.Adjustment);
 						break;
 					case "Total":
-						result = x.Total.CompareTo(y.Total);
+						result = x.DeductionSchema.Total.CompareTo(y.DeductionSchema.Total);
 						break;
 					default:
 						result = 0;

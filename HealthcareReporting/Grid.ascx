@@ -1,12 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Grid.ascx.cs" Inherits="HealthcareReporting.Grid" %>
 <%@ Register TagPrefix="uc" TagName="GridPopup" Src="~/GridPopup.ascx" %>
 <form id="form1" runat="server">
-	<asp:HiddenField ID="IsDirty" runat="server" ClientIDMode="Static" />
 	<asp:GridView runat="server" 
 		ID="gvEmployees" 
 		Width="100%" 
 		style="table-layout: fixed;"
-		CssClass="WhiteBoxNoPadding highlighted" 
+		CssClass="WhiteBoxNoPadding highlightable" 
 		AutoGenerateColumns="False" 
 		AllowSorting="True" 
 		CellPadding="5" 
@@ -15,7 +14,7 @@
 		OnSorting="Sorting"
 		OnRowCreated="RowCreated"
 		AllowPaging="True">
-		<HeaderStyle CssClass="GreenHeader" Font-Bold="true" ForeColor="Black"></HeaderStyle>
+		<HeaderStyle CssClass="header"></HeaderStyle>
 		<RowStyle CssClass="LightGrayBox" />
 		<AlternatingRowStyle CssClass="DarkGrayBox" />
 		<PagerStyle CssClass="pager" ForeColor="Black" HorizontalAlign="Right"></PagerStyle>
@@ -26,7 +25,12 @@
 					<asp:Label runat="server" Width="100%" CssClass="name">
 						<%# Eval("Name") %>
 					</asp:Label>
-					<asp:HiddenField runat="server" Value='<%# Eval("Ssn") %>' />
+					<div class="ssn">
+						<asp:HiddenField runat="server" Value='<%# Eval("Ssn") %>' />
+					</div>
+					<div class="year">
+						<asp:HiddenField runat="server" Value='<%# Eval("DeductionSchema.Year") %>' />
+					</div>
 				</ItemTemplate>
 			</asp:TemplateField>
 			<asp:BoundField HeaderText="Department" DataField="Department" SortExpression="Department">
@@ -34,9 +38,9 @@
 			<asp:TemplateField HeaderText="Deduction Plan/Amount" SortExpression="Deduction">
 				<ItemTemplate>
 					<asp:Label runat="server" CssClass="deduction" Width="100%">
-						<%# Eval("Deduction", "${0}")%>
+						<%# Eval("DeductionSchema.TotalDeduction", "${0}")%>
 					</asp:Label>
-					<uc:GridPopup runat="server" id="ucGridPopup" Deductions='<%# Eval("Deductions") %>' ></uc:GridPopup>
+					<uc:GridPopup runat="server" id="ucGridPopup" Deductions='<%# Eval("DeductionSchema.Deductions") %>' ></uc:GridPopup>
 				</ItemTemplate>
 			</asp:TemplateField>
 			<asp:TemplateField HeaderText="Adjustment Amount" SortExpression="Adjustment">
@@ -44,12 +48,16 @@
 					<asp:Label runat="server">
 						$
 					</asp:Label>
-					<asp:TextBox runat="server" CssClass="adjustment" Width="100%" Text='<%# Eval("Adjustment") %>' autocomplete="off">
+					<asp:TextBox runat="server" CssClass="adjustment" Width="100%" Text='<%# Eval("DeductionSchema.Adjustment") %>' autocomplete="off">
 					</asp:TextBox>
 				</ItemTemplate>
 			</asp:TemplateField>
-			<asp:BoundField HeaderText="Total Amount" DataField="Total" SortExpression="Total" DataFormatString="${0}">
-			</asp:BoundField>
+			<asp:TemplateField HeaderText="Total Amount" SortExpression="Total">
+				<ItemTemplate>
+					<asp:Label runat="server" Text='<%# "$" + Eval("DeductionSchema.Total") %>'>
+					</asp:Label>
+				</ItemTemplate>
+			</asp:TemplateField>
 		</Columns>
 	</asp:GridView>
 </form>

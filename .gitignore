@@ -1,0 +1,7 @@
+[Oo]bj
+[Bb]in
+_ReSharper.*
+*.csproj.user
+*.resharper.user
+*.suo
+*.cache

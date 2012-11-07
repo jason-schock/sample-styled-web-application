@@ -103,7 +103,7 @@ namespace HealthcareReporting
 						result = x.Name.CompareTo(y.Name);
 						break;
 					case "Department":
-						result = x.Department.CompareTo(y.Department);
+						result = x.Department.ToString().CompareTo(y.Department.ToString());
 						break;
 					case "Deduction":
 						result = x.DeductionSchema.TotalDeduction.CompareTo(y.DeductionSchema.TotalDeduction);

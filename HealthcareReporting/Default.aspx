@@ -6,12 +6,15 @@
 	<script src="Includes/default.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody" runat="server">
+<form id="form1" runat="server">
 	<uc:Header runat="server" id="ucHeader" Title="Form W-2 Reporting of Employer-Sponsored Health Coverage" SubTitle="Company: 132 - (DEMO) AA SUPPLY COMPANY!!" />
 	<div class="subheader">
 		<span>Employee List</span>
-		<input class="right styled" type="button" id="btnExport" value="Export to Excel"/>
+		<asp:Button runat="server" CssClass="right styled" ID="btnExport" Text="Export" OnClick="Export" />
 		<input class="right styled" type="button" id="btnImportAdjustments" value="Import Adjustment Amounts"/>
 		<input class="right styled" type="button" id="btnMapDeductionsPlans" value="Map Deductions/Plans"/>
+		<asp:DropDownList runat="server" ID="ddlYear" CssClass="right" AutoPostBack="True" />
 	</div>
 	<uc:Grid runat="server" id="ucGrid" />
+</form>
 </asp:Content>

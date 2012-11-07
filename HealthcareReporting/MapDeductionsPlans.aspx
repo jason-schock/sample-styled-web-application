@@ -6,6 +6,8 @@
 	<script src="Includes/mapdeductionplans.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentBody" runat="server">
+<form id="form1" runat="server">
 	<uc:Header runat="server" id="ucHeader" Title="Map Deductions/Plans" SubTitle="Company: 132 - (DEMO) AA SUPPLY COMPANY!!" />
 	<uc:Selector runat="server" ID="ucSelector" />
+</form>
 </asp:Content>

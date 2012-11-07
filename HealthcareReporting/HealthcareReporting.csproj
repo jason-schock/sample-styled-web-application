@@ -130,6 +130,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Department.cs" />
     <Compile Include="Services\EmployeeRepository.Hardcoded.cs" />
     <Compile Include="Services\Deduction.cs" />
     <Compile Include="Services\DeductionPlansRepository.cs" />

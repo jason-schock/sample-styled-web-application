@@ -49,7 +49,7 @@
 	//
 	// Selecting textbox content on focus (doesn't work in Chrome?!).
 	//
-	$("input.adjustment").focus(function () {
+	$("input.adjustment").click(function () {
 		$(this).data("original", $(this).val());
 		$(this).select();
 	});
@@ -76,25 +76,16 @@
 	// Save the changes.
 	//
 	$("#btnUpdate").click(function () {
-		var updates = $.map(getChangedTextboxes(), function ($textbox, id) {
+		var updates = $.map(getChangedTextboxes(), function ($textbox) {
 			var $row = $textbox.closest("tr");
-			var ssn = $row.find("div.ssn > input:hidden").val();
+			var id = $row.find("div.id > input:hidden").val();
 			var year = $row.find("div.year > input:hidden").val();
-			return ssn + " " + year + " " + $textbox.val();
+			return id + " " + year + " " + $textbox.val();
 		});
 		var data = { 'updates': updates.join(", ") };
 		$.ajax({
-			type: "POST",
 			url: "Default.aspx/Save",
 			data: JSON.stringify(data),
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: function (response) {
-				window.location = "";
-			},
-			error: function (xhr, ajaxOptions, thrownError) {
-				alert(xhr.responseText);
-			}
 		});
 	});
 });

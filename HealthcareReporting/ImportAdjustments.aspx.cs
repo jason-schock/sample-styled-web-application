@@ -37,6 +37,7 @@ namespace HealthcareReporting
 				new EmployeeRepository().UpdateAdjustments(employees);
 			}
 			catch (Exception ex) {
+				lblInfo.CssClass = "required";
 				lblInfo.Text = "ERROR: " + ex.Message;
 			}
 		}
@@ -46,6 +47,7 @@ namespace HealthcareReporting
 			using (var reader = new CsvHelper.CsvReader(new StreamReader(content))) {
 				return reader.GetRecords<CsvAdjustment>().Where(x => x.Year > 0)
 							 .Select(x => new Employee {
+									Id = 0,
 									Ssn = x.Ssn,
 									DeductionSchema = new DeductionSchema {
 										Adjustment = x.Amount,
@@ -58,13 +60,13 @@ namespace HealthcareReporting
 
 		public class CsvAdjustment
 		{
-			[CsvField(Name = "Employee ID", Default = "")]
+			[CsvField(Index = 0, Name = "Employee ID", Default = "")]
 			public string Ssn { get; set; }
 
-			[CsvField(Name = "W-2 Year", Default = 0)]
+			[CsvField(Index = 1, Name = "W-2 Year", Default = 0)]
 			public int Year { get; set; }
 
-			[CsvField(Name = "Adjustment Amount", Default = 0)]
+			[CsvField(Index = 2, Name = "Adjustment Amount", Default = 0)]
 			public decimal Amount { get; set; }
 		}
 	}

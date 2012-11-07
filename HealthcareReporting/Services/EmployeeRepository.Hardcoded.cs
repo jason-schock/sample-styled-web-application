@@ -6,78 +6,90 @@ namespace HealthcareReporting.Services
 {
 	internal static class EmployeeRepositoryHardcoded
 	{
-		/// <summary>
-		/// Hardcoded one - in the real app will return all employees.
-		/// </summary>
-		/// <value></value>
+		private static readonly Random _random = new Random(123);
+		private static List<Employee> _employees;
+		private static List<EmployeeIdType> _employeeIdTypes;
+
 		internal static IEnumerable<Employee> Employees
 		{
-			get
-			{
-				return new List<Employee> {
-					new Employee {Ssn = "515-30-5411", Name = "Jeanie Holtzclaw", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5413", Name = "Kelly Laffin", Department = "HR", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5414", Name = "Neil Gauger", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5415", Name = "Tia Ulrey", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5416", Name = "Nita Batterton", Department = "HR", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5417", Name = "Hugh Caufield", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5418", Name = "Allan Shanley", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5419", Name = "Allyson Ogg", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5420", Name = "Gay Finneran", Department = "HR", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5421", Name = "Clayton Buesing", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5422", Name = "Jessie Quisenberry", Department = "HR", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5423", Name = "Tania Lichty", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5424", Name = "Lonnie Hirth", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5425", Name = "Mathew Ridder", Department = "HR", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5426", Name = "Clayton Hillin", Department = "HR", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5427", Name = "Darren Lowy", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5428", Name = "Max Texeira", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5429", Name = "Melisa Litt", Department = "HR", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5430", Name = "Sofia Ishibashi", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5431", Name = "Annabelle Iorio", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5432", Name = "Lonnie Schaff", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5433", Name = "Nelson Sater", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5434", Name = "Benita Arter", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5435", Name = "Julio Fallis", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5436", Name = "Tyrone Logiudice", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5437", Name = "Jessie Holoman", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5438", Name = "Julianne Dahlquist", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5439", Name = "Lakisha Rough", Department = "IT", DeductionSchema = RandomPlan()},
-					new Employee {Ssn = "515-30-5440", Name = "Dollie Lisby", Department = "IT", DeductionSchema = RandomPlan()},
-				};
-			}
+			get { return _employees ?? (_employees = CreateEmployees()); }
 		}
-
 		internal static IEnumerable<EmployeeIdType> EployeeIdTypes
 		{
-			get
-			{
-				return new List<EmployeeIdType> {
+			get { return _employeeIdTypes ?? (_employeeIdTypes = CreateEmployeeIdTypes()); }
+		}
+
+		private static List<Employee> CreateEmployees()
+		{
+			var names = new[] {
+				"Jeanie Holtzclaw", "Kelly Laffin", "Neil Gauger", "Tia Ulrey", "Nita Batterton", 
+				"Hugh Caufield", "Allan Shanley", "Allyson Ogg", "Gay Finneran", "Clayton Buesing", 
+				"Jessie Quisenberry", "Tania Lichty", "Lonnie Hirth", "Mathew Ridder", "Clayton Hillin", 
+				"Darren Lowy", "Max Texeira", "Melisa Litt", "Sofia Ishibashi", "Annabelle Iorio",
+				"Lonnie Schaff", "Nelson Sater", "Benita Arter", "Julio Fallis", "Tyrone Logiudice", 
+				"Jessie Holoman", "Julianne Dahlquist", "Lakisha Rough", "Maria Raspberose", "Donald McMurphey"
+			};
+
+			return names.Select(CreateEmployee).ToList();
+		}
+
+		private static Employee CreateEmployee(string fullName, int id)
+		{
+			var names = fullName.Split(new []{' '});
+			var guid = Guid.NewGuid().ToString("N");
+
+			return new Employee {
+				Id = id,
+				Department = RandomDepartment(),
+				FirstName = names[0],
+				LastName = names[1],
+				Ssn = string.Format("{0}-{1}-{2}", guid.Substring(0,3), guid.Substring(4,3), guid.Substring(5, 4)),
+				DeductionSchema = RandomSchema()
+			};
+		}
+
+		private static Department RandomDepartment()
+		{
+			var divisions = new[] { "000", "001", "002", "003" };
+			var units = new[] { "000", "001" };
+			var codes = new[] { "000", "001", "002" };
+			var descriptions = new[] { "Developer Tools", "Online Services", "Business", "System" };
+
+			return new Department {
+				DivisionCode = divisions[_random.Next(0, divisions.Length)],
+				BusinessUnitCode = units[_random.Next(0, units.Length)],
+				DepartmentCode = codes[_random.Next(0, codes.Length)],
+				Description = descriptions[_random.Next(0, descriptions.Length)]
+			};
+		}
+
+		private static DeductionSchema RandomSchema()
+		{
+			var years = new[] {2010, 2011, 2012};
+			var deductions = new DeductionPlansRepository().ListDeductions().ToList();
+			var selected = _random.Next(0, deductions.Count);
+
+			var result = new List<Deduction>();
+			for (int i = 0; i < selected; i++) {
+				result.Add(new Deduction {Name = deductions[_random.Next(0, deductions.Count)].Name, Amount = _random.Next(1,100), EmployerAmount = _random.Next(1,50)});
+			}
+			
+			return new DeductionSchema {
+				Adjustment = 0,
+				Deductions = result,
+				Year = years[_random.Next(0, years.Length)]
+			};
+		}
+
+		private static List<EmployeeIdType> CreateEmployeeIdTypes()
+		{
+			return new List<EmployeeIdType> {
 					new EmployeeIdType {Id = 12, Name = "Clock Number"},
 					new EmployeeIdType {Id = 26, Name = "Former Employee ID"},
 					new EmployeeIdType {Id = 32, Name = "SSN"},
 					new EmployeeIdType {Id = 41, Name = "Employee Code"},
 					new EmployeeIdType {Id = 58, Name = "Badge Number"},
 				};
-			}
-		}
-
-		private static readonly Random _random = new Random(123);
-		private static DeductionSchema RandomPlan()
-		{
-			var deductions = new DeductionPlansRepository().ListDeductions().ToList();
-			var selected = _random.Next(1, deductions.Count);
-
-			var result = new List<Deduction>();
-			for (int i = 0; i < selected; i++) {
-				result.Add(new Deduction {Name = deductions[_random.Next(1, deductions.Count)].Name, Amount = _random.Next(1,100), EmployerAmount = _random.Next(1,50)});
-			}
-			
-			return new DeductionSchema {
-				Adjustment = 0,
-				Deductions = result,
-				Year = 2012
-			};
 		}
 	}
 }
